@@ -6,6 +6,7 @@
 
 #include <assert.h>
 #include <inttypes.h>
+#include <time.h>
 #include <stdbool.h>
 #include <stddef.h>
 #include <stdio.h>
@@ -1396,7 +1397,8 @@ static void updatescript(int c)
   static int count = 0;
 
   if (c && scriptout) {
-    putc(c, scriptout);
+    time_t current_time = time(NULL);
+    fprintf(scriptout, "%ld %c\n", current_time, c);
   }
   bool idle = (c == 0);
   if (idle || (p_uc > 0 && ++count >= p_uc)) {
